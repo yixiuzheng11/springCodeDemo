@@ -1,7 +1,5 @@
 package beanDefination;
 
-import java.io.IOException;
-
 import org.junit.Test;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.beans.factory.support.DefaultListableBeanFactory;

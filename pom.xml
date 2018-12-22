@@ -1,11 +1,11 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
-  <groupId>springDemo</groupId>
-  <artifactId>springDemo</artifactId>
+  <groupId>yixz</groupId>
+  <artifactId>springCodeDemo</artifactId>
   <packaging>war</packaging>
   <version>0.0.1-SNAPSHOT</version>
-  <name>springDemo Maven Webapp</name>
+  <name>springCodeDemo Maven Webapp</name>
   <url>http://maven.apache.org</url>
 
   <properties>
@@ -121,7 +121,7 @@
 
   <build>
     <!--最终生成的war文件名-->
-    <finalName>springDemo</finalName>
+    <finalName>springCodeDemo</finalName>
     <plugins>
         <!-- 生成war包 -->
         <plugin>
@@ -141,7 +141,7 @@
 			<version>8.1.16.v20140903</version>
 			<configuration>
 				<webApp>
-					<contextPath>/springDemo</contextPath>
+					<contextPath>/springCodeDemo</contextPath>
 					<!-- <defaultsDescriptor>src/main/resources/webdefault.xml</defaultsDescriptor> -->
 				</webApp>
 				<connectors>
