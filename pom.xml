@@ -33,18 +33,23 @@
       <artifactId>jsp-api</artifactId>
    	  <version>${jsp.version}</version>
 	</dependency>
-  	<!-- Junit依赖 -->
+  	<!-- spring整合Junit依赖 -->
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
       <version>${junit.version}</version>
       <scope>test</scope>
     </dependency>
+    <dependency>  
+       <groupId>org.springframework</groupId>  
+       <artifactId>spring-test</artifactId>  
+       <version>${spring.version}</version>  
+    </dependency>   
     <!-- Spring 核心依赖 -->
     <dependency>
        <groupId>org.springframework</groupId >
        <artifactId>spring-context</artifactId >
-       <version> ${spring.version}</version >
+       <version>${spring.version}</version >
     </dependency>
     <dependency>
       <groupId>org.springframework</groupId>

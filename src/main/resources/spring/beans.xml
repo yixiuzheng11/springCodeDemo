@@ -31,4 +31,9 @@
  		<property name="projectService" ref="projectService" />
  	</bean> -->
  
+ 	<bean id="classA" class="beans.ClassA">
+      <property name="resource">
+         <value>classpath:spring/beans.xml</value>
+      </property> 
+   </bean>  
  </beans>
