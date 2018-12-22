@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:p="http://www.springframework.org/schema/p" 
+	xmlns:context="http://www.springframework.org/schema/context" 
+	xmlns:aop="http://www.springframework.org/schema/aop" 
+	xmlns:tx="http://www.springframework.org/schema/tx" 
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+		http://www.springframework.org/schema/beans/spring-beans-3.2.xsd 
+		http://www.springframework.org/schema/context 
+		http://www.springframework.org/schema/context/spring-context-3.2.xsd 
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.2.xsd 
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.2.xsd">
+
+	<!--开启annotation -->  
+    <context:annotation-config />
+ 	<!-- 扫描类包，将标注Spring注解的类自动转化Bean，同时完成Bean的注入 --> 
+ 	<context:component-scan base-package="com"/> 
+  
+  	<!--设置配置文件路径 -->
+  	<context:property-placeholder location="classpath:config/init.properties"/>
+  
+ 	<!-- 配置c3p0数据源 --> 
+ 	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close">      
+    	<property name="driverClass" value="${jdbc_driver}"/>         
+    	<property name="jdbcUrl" value="${jdbc_url}"/>         
+    	<property name="user" value="${jdbc_user}"/>         
+    	<property name="password" value="${jdbc_password}"/>
+    	<!--配置连接池初始值 -->  
+        <property name="acquireIncrement" value="${c3p0.acquireIncrement}"></property>  
+        <property name="initialPoolSize" value="${c3p0.initialPoolSize}"></property>  
+        <!--当最少空闲连接时，连接数小于该值，就会自动申请一些连接 -->  
+        <property name="minPoolSize" value="${c3p0.minPoolSize}"></property>  
+        <property name="maxIdleTime" value="${c3p0.maxIdleTime}"></property>  
+        <property name="maxPoolSize" value="${c3p0.maxPoolSize}"></property>       
+	</bean> 
+
+ 	<!-- 配置jdbc模板 --> 
+ 	<bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+ 		<property name="dataSource" ref="dataSource" />
+ 	</bean>
+ 
+ 	<!--创建spring事务管理 -->  
+    <!--配置事务管理器 -->  
+    <bean id="txManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">  
+        <property name="dataSource" ref="dataSource" />
+    </bean>
+    <!--配置AOP ，spring是通过AOP来管理事务 -->  
+    <aop:config>  
+        <!--设置pointcut，表明那些方法中加入事务 -->
+        <aop:pointcut id="methods"  
+            expression="execution(* com.wu.facade.impl.*.*(..))" />  
+        <!--通过advisor来确定具体要加入事务处理的方法 -->  
+        <aop:advisor advice-ref="txAdvice" pointcut-ref="methods" />  
+    </aop:config>  
+    <!--配置那些方法要加入事务控制 -->  
+    <tx:advice id="txAdvice" transaction-manager="txManager">  
+        <tx:attributes>  
+            <!--表示所有方法都加入事务控制 -->  
+            <tx:method name="*" propagation="REQUIRED" read-only="true" />
+            <tx:method name="save*" propagation="REQUIRED" />  
+            <tx:method name="update*" propagation="REQUIRED" />  
+            <tx:method name="del*" propagation="REQUIRED" />  
+            <tx:method name="query*" propagation="REQUIRED" />  
+        </tx:attributes>  
+    </tx:advice>  
+ </beans>
